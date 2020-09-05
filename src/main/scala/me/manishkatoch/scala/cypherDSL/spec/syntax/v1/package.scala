@@ -1,13 +1,12 @@
 package me.manishkatoch.scala.cypherDSL.spec.syntax
 
 import me.manishkatoch.scala.cypherDSL.spec.clauses._
-import me.manishkatoch.scala.cypherDSL.spec.entities.{CypherEntity, Node, NodeType, RelationType, Relationship}
-import me.manishkatoch.scala.cypherDSL.spec.operators.Distinct
+import me.manishkatoch.scala.cypherDSL.spec.entities.{CypherEntity, Node, NodeType, RelationType}
 import me.manishkatoch.scala.cypherDSL.spec.{Path, QueryProvider, Statement}
 import shapeless.HList
 import shapeless.ops.hlist.ToTraversable
 
-import scala.reflect.runtime.universe.{WeakTypeTag, weakTypeOf}
+import scala.reflect.runtime.universe.{weakTypeOf, WeakTypeTag}
 
 package object v1 {
   def cypher                            = Statement()
@@ -16,15 +15,16 @@ package object v1 {
   def anyRel[T <: Product: WeakTypeTag] = RelationType(weakTypeOf[T])
   def anyRelation                       = RelationType(weakTypeOf[Any])
 
-  implicit class MatcherStatement(statement: Statement) {
+  implicit final class MatcherStatement(statement: Statement) {
     def MATCH[T <: Product](element: T)(implicit queryProvider: QueryProvider[T]): Statement = {
       statement.copy(clauses = statement.clauses :+ Matches(element))
     }
     def MATCH(element: NodeType): Statement = {
       statement.copy(clauses = statement.clauses :+ Matches(element))
     }
-    def MATCH[T <: Product, TH <: HList](element: Node[T, TH])(implicit queryProvider: QueryProvider[T],
-                                                               i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def MATCH[T <: Product, TH <: HList](
+        element: Node[T, TH]
+    )(implicit queryProvider: QueryProvider[T], i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
       statement.copy(clauses = statement.clauses :+ Matches(element))
     }
 
@@ -37,9 +37,9 @@ package object v1 {
     def OPTIONAL_MATCH[T <: Product](element: T)(implicit queryProvider: QueryProvider[T]): Statement = {
       statement.copy(clauses = statement.clauses :+ OptionallyMatches(element))
     }
-    def OPTIONAL_MATCH[T <: Product, TH <: HList](element: Node[T, TH])(
-        implicit queryProvider: QueryProvider[T],
-        i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def OPTIONAL_MATCH[T <: Product, TH <: HList](
+        element: Node[T, TH]
+    )(implicit queryProvider: QueryProvider[T], i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
       statement.copy(clauses = statement.clauses :+ OptionallyMatches(element))
     }
     def OPTIONAL_MATCH(element: Path): Statement = {
@@ -52,8 +52,9 @@ package object v1 {
     def CREATE(element: NodeType): Statement = {
       statement.copy(clauses = statement.clauses :+ Creates(element))
     }
-    def CREATE[T <: Product, TH <: HList](element: Node[T, TH])(implicit queryProvider: QueryProvider[T],
-                                                                i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def CREATE[T <: Product, TH <: HList](
+        element: Node[T, TH]
+    )(implicit queryProvider: QueryProvider[T], i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
       statement.copy(clauses = statement.clauses :+ Creates(element))
     }
 
@@ -67,8 +68,9 @@ package object v1 {
     def MERGE(element: NodeType): Statement = {
       statement.copy(clauses = statement.clauses :+ Merges(element))
     }
-    def MERGE[T <: Product, TH <: HList](element: Node[T, TH])(implicit queryProvider: QueryProvider[T],
-                                                               i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def MERGE[T <: Product, TH <: HList](
+        element: Node[T, TH]
+    )(implicit queryProvider: QueryProvider[T], i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
       statement.copy(clauses = statement.clauses :+ Merges(element))
     }
 
@@ -85,8 +87,9 @@ package object v1 {
     def DELETE(element: RelationType): Statement = {
       statement.copy(clauses = statement.clauses :+ Deletes(element, detaches = false))
     }
-    def DELETE[T <: Product, TH <: HList](element: Node[T, TH])(implicit queryProvider: QueryProvider[T],
-                                                                i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def DELETE[T <: Product, TH <: HList](
+        element: Node[T, TH]
+    )(implicit queryProvider: QueryProvider[T], i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
       statement.copy(clauses = statement.clauses :+ Deletes(element, detaches = false))
     }
 
@@ -103,9 +106,9 @@ package object v1 {
     def DETACH_DELETE(element: RelationType): Statement = {
       statement.copy(clauses = statement.clauses :+ Deletes(element, detaches = true))
     }
-    def DETACH_DELETE[T <: Product, TH <: HList](element: Node[T, TH])(
-        implicit queryProvider: QueryProvider[T],
-        i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def DETACH_DELETE[T <: Product, TH <: HList](
+        element: Node[T, TH]
+    )(implicit queryProvider: QueryProvider[T], i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
       statement.copy(clauses = statement.clauses :+ Deletes(element, detaches = true))
     }
 
@@ -113,17 +116,16 @@ package object v1 {
       statement.copy(clauses = statement.clauses :+ Deletes(element, detaches = true))
     }
 
-    def SET[T <: Product, TH <: HList](element: T, setters: List[(CypherEntity, Any)])(
-        implicit queryProvider: QueryProvider[T],
-        i0: ToTraversable.Aux[TH, List, Symbol]): Statement = {
+    def SET[T <: Product, TH <: HList](element: T, setters: List[(CypherEntity, Any)])(implicit
+        queryProvider: QueryProvider[T],
+        i0: ToTraversable.Aux[TH, List, Symbol]
+    ): Statement = {
       statement.copy(clauses = statement.clauses :+ Sets(element, setters))
     }
 
-    def SET[T <: Product](setters: (Node[T, _], Any)*)(
-      implicit queryProvider: QueryProvider[T]): Statement = {
-      statement.copy(clauses = statement.clauses :+ Sets(setters:_*))
+    def SET[T <: Product](setters: (Node[T, _], Any)*)(implicit queryProvider: QueryProvider[T]): Statement = {
+      statement.copy(clauses = statement.clauses :+ Sets(setters: _*))
     }
-
 
     def SKIP(count: Int): Statement = {
       statement.copy(clauses = statement.clauses :+ Skips(count))
@@ -140,7 +142,6 @@ package object v1 {
     def WITH[T <: Product](elements: T*): Statement = {
       statement.copy(clauses = statement.clauses :+ With(elements: _*))
     }
-
 
     def ORDER_BY[T <: Product](elements: T*): Statement = {
       statement.copy(clauses = statement.clauses :+ OrdersBy(elements: _*))

@@ -1,6 +1,6 @@
 package me.manishkatoch.scala.cypherDSL.spec.utils
 
-import me.manishkatoch.scala.cypherDSL.spec.entities.{CypherType, Node, NodeType, RelationType}
+import me.manishkatoch.scala.cypherDSL.spec.entities.{Node, NodeType, RelationType}
 import me.manishkatoch.scala.cypherDSL.spec.Utils._
 
 private[cypherDSL] trait ElementPropertyExtracting {
@@ -28,4 +28,5 @@ private[cypherDSL] trait ElementPropertyAliasing {
 }
 
 private[cypherDSL] trait ElementPropertyExtractingAndAliasing
-  extends ElementPropertyExtracting with ElementPropertyAliasing {}
+    extends ElementPropertyExtracting
+    with ElementPropertyAliasing {}
