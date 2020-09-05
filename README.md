@@ -22,10 +22,6 @@ Binary release artefacts are published to the Sonatype OSS Repository Hosting se
 ```sbt
 "me.manishkatoch" %% "scala-cypher-dsl" % "0.4.5"
 ```
-#### Gradle
-```gradle
-implementation group: 'me.manishkatoch', name: 'scala-cypher-dsl', version: '0.4.5'
-```
 
 ## Usage
 
@@ -119,27 +115,27 @@ for detailed DSL usage and more examples, see [Wiki](https://github.com/manishkk
 
 as of v0.4.5
 
-| Cypher Clauses | DSL Support |
-|----------------|-------------|
-| MATCH | :white_check_mark: |
+| Cypher Clauses | DSL Support        |
+| -------------- | ------------------ |
+| MATCH          | :white_check_mark: |
 | OPTIONAL MATCH | :white_check_mark: |
-| START | :x: |
-| RETURN | :white_check_mark: |
-| WITH | :white_check_mark: |
-| UNWIND | :x: |
-| WHERE | :x: |
-| ORDER BY | :white_check_mark: |
-| SKIP | :white_check_mark: |
-| LIMIT | :white_check_mark: |
-| CREATE | :white_check_mark: |
-| DELETE | :white_check_mark: |
-| SET | :white_check_mark: |
-| REMOVE | :white_check_mark: |
-| FOREACH | :x: |
-| MERGE | :white_check_mark: |
-| CALL […​YIELD]| :x: |
-| CREATE UNIQUE | :x: |
-| UNION | :x: |
+| START          | :x:                |
+| RETURN         | :white_check_mark: |
+| WITH           | :white_check_mark: |
+| UNWIND         | :x:                |
+| WHERE          | :x:                |
+| ORDER BY       | :white_check_mark: |
+| SKIP           | :white_check_mark: |
+| LIMIT          | :white_check_mark: |
+| CREATE         | :white_check_mark: |
+| DELETE         | :white_check_mark: |
+| SET            | :white_check_mark: |
+| REMOVE         | :white_check_mark: |
+| FOREACH        | :x:                |
+| MERGE          | :white_check_mark: |
+| CALL […​YIELD] | :x:                |
+| CREATE UNIQUE  | :x:                |
+| UNION          | :x:                |
 
 ## Contributors and Participation
 scala-cypher-dsl is currently maintained by [Manish Katoch](https://github.com/manishkkatoch/).
