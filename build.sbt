@@ -5,5 +5,6 @@ val scalaCypherDsl = project
     libraryDependencies ++= Seq(
       "com.chuusai"   %% "shapeless" % "2.3.3",
       "org.scalatest" %% "scalatest" % "3.1.0"
-    )
+    ),
+    scalacOptions -= "-Xfatal-warnings"
   )
